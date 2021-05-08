@@ -1,34 +1,39 @@
 package pl.MateuszLukaszczyk.QuizAndSurveyApplication.models;
 
-import org.springframework.stereotype.Component;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.text.DateFormat;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+@Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "Quiz")
 public class Quiz {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    Survey surveyInQuiz;
-    String title;
-    String description;
+    private String title;
+    private String description;
+    private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "Quiz")
-    List<Question> questions;
-    DateFormat createdAt;
+    @OneToMany(targetEntity = Question.class, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "QuizQuestions", referencedColumnName = "id")
+    private List<Question> questions = new ArrayList<>();
 
-    public Quiz() {
-    }
 
-    public Quiz(Survey surveyInQuiz, String title, String description, List<Question> questions, DateFormat createdAt) {
-        this.surveyInQuiz = surveyInQuiz;
-        this.title = title;
-        this.description = description;
-        this.questions = questions;
-        this.createdAt = createdAt;
-    }
 }

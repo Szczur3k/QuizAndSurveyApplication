@@ -1,23 +1,27 @@
 package pl.MateuszLukaszczyk.QuizAndSurveyApplication.models;
 
-import org.springframework.stereotype.Component;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "Question")
 public class Question {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     String content;
     int pointForCorrectAnswer;
-    List<Answer> answers;
-    List<Answer> correctAnswers;
-
-    @ManyToOne
-    Quiz whichQuiz;
 
 }
