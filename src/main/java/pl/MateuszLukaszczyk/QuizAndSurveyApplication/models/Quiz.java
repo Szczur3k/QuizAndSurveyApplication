@@ -32,7 +32,7 @@ public class Quiz {
     private LocalDateTime createdAt;
 
     @OneToMany(targetEntity = Question.class, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "QuizQuestions", referencedColumnName = "id")
+    @JoinColumn(name = "WhichQuizId", referencedColumnName = "id")
     private List<Question> questions = new ArrayList<>();
 
 

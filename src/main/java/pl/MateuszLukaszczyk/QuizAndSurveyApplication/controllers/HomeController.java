@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import pl.MateuszLukaszczyk.QuizAndSurveyApplication.models.Question;
 import pl.MateuszLukaszczyk.QuizAndSurveyApplication.models.Quiz;
 import pl.MateuszLukaszczyk.QuizAndSurveyApplication.repositories.QuizRepository;
@@ -18,8 +19,11 @@ public class HomeController {
     QuizRepository quizRepository;
 
     @GetMapping
-    public String getHomePage(){
-        return "There will be view with some Quizzes and Surveys";
+    public ModelAndView index(){
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("quizzes", quizRepository.findAll());
+        mav.setViewName("index");
+        return mav;
     }
 
     @GetMapping("/quizzes")
